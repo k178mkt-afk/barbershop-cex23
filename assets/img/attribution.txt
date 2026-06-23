@@ -1,0 +1,80 @@
+Unsplash Photo Attribution
+========================================
+
+hero.jpg
+  Photo by Barney Goodman on Unsplash
+  Profile: https://unsplash.com/@bgoodpic?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/an-empty-barbershop-interior-with-several-chairs-and-mirrors-AXurvQTtO3Y?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+atm-1.jpg
+  Photo by Babak Eshaghian on Unsplash
+  Profile: https://unsplash.com/@babak22ir?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/a-barbershop-mirror-with-skull-cape-and-equipment-GvSsskFKbvI?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+atm-2.jpg
+  Photo by Chaps and Co on Unsplash
+  Profile: https://unsplash.com/@chapsandco_ny?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/chaps-co-barbershop-with-vintage-posters-on-wall-FXwiVVbKoeM?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+atm-3.jpg
+  Photo by inni w on Unsplash
+  Profile: https://unsplash.com/@wini_1619?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/a-coffee-shop-with-a-mural-on-the-wall-5WK2RTjj_yE?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+atm-4.jpg
+  Photo by André Reis on Unsplash
+  Profile: https://unsplash.com/@andrereispt?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/red-and-white-leather-padded-chair-1_DAlXy0wng?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+atm-5.jpg
+  Photo by Andrea Donato on Unsplash
+  Profile: https://unsplash.com/@andreadonato?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/black-and-silver-pocket-knife-beside-silver-round-coins-MNu0n-3BIKs?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+service-combo.jpg
+  Photo by Alexandre Lecocq on Unsplash
+  Profile: https://unsplash.com/@mr_alexandre?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/grayscale-photography-of-barber-shaving-another-mans-chin-Y5nIFhQlzlo?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+service-haircut.jpg
+  Photo by Victor Sirbu on Unsplash
+  Profile: https://unsplash.com/@victorsirbu04?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/a-man-getting-his-hair-cut-at-a-barber-shop-Cr3CxWtuc5U?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+service-shave.jpg
+  Photo by Apothecary 87 on Unsplash
+  Profile: https://unsplash.com/@apothecary87?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/person-holding-black-and-silver-jack-daniels-bottle-6N1idFq5FRk?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+master-1.jpg
+  Photo by Nate Johnston on Unsplash
+  Profile: https://unsplash.com/@natejohnston?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/a-man-cutting-another-mans-hair-with-a-pair-of-scissors-tgPrIYnW3g4?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+master-2.jpg
+  Photo by Nathon Oski on Unsplash
+  Profile: https://unsplash.com/@onatecan?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/grayscale-photography-of-person-holding-scissor-clipping-mans-beard-fE42nRlBcG8?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+master-3.jpg
+  Photo by Jeppe Mønster on Unsplash
+  Profile: https://unsplash.com/@jeppemoenster?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/man-in-black-crew-neck-t-shirt-holding-white-bottle-T_gTN3Po9RQ?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license
+
+master-4.jpg
+  Photo by Eugene Chystiakov on Unsplash
+  Profile: https://unsplash.com/@eugenechystiakov?utm_source=cex23_demo&utm_medium=referral
+  Photo:   https://unsplash.com/photos/shallow-focus-photo-of-man-holding-scissors-taZSJ6xmt48?utm_source=cex23_demo&utm_medium=referral
+  License: https://unsplash.com/license

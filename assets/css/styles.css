@@ -1,0 +1,51 @@
+/* ЦЕХ 23 — кастомные стили поверх Tailwind-утилит */
+
+:root { color-scheme: dark; }
+
+html { -webkit-tap-highlight-color: transparent; }
+
+/* Плёночное зерно: фиксированный слой, не на скролл-контейнере (perf-guardrail скилла) */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Аккуратные тонкие скроллбары у горизонтальных рядов */
+.scroll-row::-webkit-scrollbar,
+.pan-wrap::-webkit-scrollbar { height: 6px; }
+.scroll-row::-webkit-scrollbar-thumb,
+.pan-wrap::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 999px; }
+.scroll-row { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.12) transparent; }
+
+/* Мобильная галерея атмосферы: горизонтальный скролл со snap (fallback без пина) */
+.pan-wrap { overflow-x: auto; }
+.pan-track { scroll-snap-type: x mandatory; }
+.pan-item { scroll-snap-align: start; }
+.pan-wrap.is-pinned { overflow: hidden; }
+.pan-wrap.is-pinned .pan-track { scroll-snap-type: none; }
+
+/* Маркетинговая «бегущая строка» — единственный marquee на странице */
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.marquee { animation: marquee 26s linear infinite; }
+
+/* ── Анимации появления ──
+   По умолчанию всё ВИДИМО. Скрываем только когда активен JS (html.js),
+   чтобы при отключённом/упавшем JS страница оставалась читаемой. */
+html.js .reveal { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+html.js .hero-word { display: inline-block; opacity: 0; transform: translateY(0.4em); }
+
+/* Заметная focus-обводка для доступности */
+:focus-visible { outline: 2px solid #FF5A1F; outline-offset: 2px; border-radius: 4px; }
+
+/* Уважаем prefers-reduced-motion: ничего не двигается, всё сразу видно */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .marquee { animation: none; }
+  html.js .reveal,
+  html.js .hero-word { opacity: 1; transform: none; filter: none; }
+  * { scroll-snap-type: none !important; }
+}

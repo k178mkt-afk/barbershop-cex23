@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ЦЕХ 23 · Барбершоп в Краснодаре</title>
+  <meta name="description" content="ЦЕХ 23, мужская мастерская стрижки и бороды в центре Краснодара. Точные стрижки, бритьё опасной бритвой, уход. Запись онлайн." />
+
+  <!-- Шрифты с кириллицей (для демо через Google Fonts; в проде — self-host) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Иконки Phosphor (один набор: regular + fill для звёзд) -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+
+  <!-- Tailwind play-CDN (демо). В проде — компиляция Tailwind. -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink:   { 950: '#0A0A0B', 900: '#121214', 850: '#171719', 800: '#1C1C1F', 700: '#2A2A2E' },
+            bone:  '#EDE7DD',
+            muted: '#A39E96',
+            ember: { DEFAULT: '#FF5A1F', 600: '#F1551F', 700: '#D8430F' }
+          },
+          fontFamily: {
+            display: ['Unbounded', 'system-ui', 'sans-serif'],
+            sans:    ['Manrope', 'system-ui', 'sans-serif']
+          },
+          borderRadius: { card: '16px', input: '10px' },
+          maxWidth: { shell: '1400px' }
+        }
+      }
+    };
+  </script>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+
+<body class="bg-ink-950 font-sans text-bone antialiased selection:bg-ember selection:text-ink-950">
+
+  <!-- Плёночное зерно: фиксированный слой, не на скролл-контейнере -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ░░ НАВИГАЦИЯ — плавающий glass-pill, в одну строку ░░ -->
+  <header class="fixed inset-x-0 top-0 z-50 flex justify-center px-4">
+    <nav id="nav" class="mt-4 flex w-full max-w-shell items-center justify-between gap-4 rounded-full border border-white/10 bg-ink-900/60 px-5 py-3 backdrop-blur-xl transition-[background-color,padding,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
+      <a href="#hero" class="flex items-center gap-2 font-display text-lg font-extrabold tracking-tight text-bone">
+        ЦЕХ<span class="text-ember">23</span>
+      </a>
+      <ul class="hidden items-center gap-8 text-sm font-medium text-muted lg:flex">
+        <li><a href="#services" class="transition-colors hover:text-bone">Услуги</a></li>
+        <li><a href="#masters" class="transition-colors hover:text-bone">Мастера</a></li>
+        <li><a href="#atmosphere" class="transition-colors hover:text-bone">Атмосфера</a></li>
+        <li><a href="#reviews" class="transition-colors hover:text-bone">Отзывы</a></li>
+      </ul>
+      <a href="#booking" data-magnetic class="group inline-flex items-center gap-2 rounded-full bg-ember py-2 pl-5 pr-2 text-sm font-semibold text-ink-950 transition-transform duration-300 active:scale-[0.97]">
+        Записаться
+        <span class="flex h-8 w-8 items-center justify-center rounded-full bg-ink-950/15 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" data-magnet-inner>
+          <i class="ph ph-arrow-up-right text-base"></i>
+        </span>
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ░░ 1. HERO — full-bleed, контент слева, фото на фоне со скримом ░░ -->
+    <section id="hero" class="relative flex min-h-[100dvh] items-end overflow-hidden">
+      <div class="absolute inset-0">
+        <img src="https://images.unsplash.com/photo-1781455793310-8427c96454c7?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1920&q=80&fm=jpg&fit=crop" alt="Барбер за работой в барбершопе ЦЕХ 23" class="h-full w-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-ink-950/80 to-transparent"></div>
+      </div>
+
+      <div class="relative z-10 mx-auto w-full max-w-shell px-4 pb-20 pt-28 md:px-8 md:pb-28">
+        <p class="reveal mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-ink-900/40 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.22em] text-muted backdrop-blur-sm">
+          <span class="h-1.5 w-1.5 rounded-full bg-ember"></span> Барбершоп · Краснодар · 23 регион
+        </p>
+
+        <h1 class="hero-title max-w-4xl font-display text-5xl font-extrabold leading-[1.02] tracking-tight text-bone md:text-7xl">
+          <span class="hero-word">Чёткая</span> <span class="hero-word">линия,</span><br />
+          <span class="hero-word">твой</span> <span class="hero-word text-ember">характер</span>
+        </h1>
+
+        <p class="reveal mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">
+          Мужская мастерская стрижки и бороды в центре Краснодара. Записывайся к мастеру, всё остальное сделаем мы.
+        </p>
+
+        <div class="reveal mt-9 flex flex-wrap items-center gap-3">
+          <a href="#booking" data-magnetic class="group inline-flex items-center gap-2 rounded-full bg-ember py-3 pl-6 pr-2.5 text-base font-semibold text-ink-950 transition-transform duration-300 active:scale-[0.97]">
+            Записаться
+            <span class="flex h-9 w-9 items-center justify-center rounded-full bg-ink-950/15 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" data-magnet-inner>
+              <i class="ph ph-arrow-up-right text-lg"></i>
+            </span>
+          </a>
+          <a href="#services" class="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3 text-base font-medium text-bone transition-colors hover:bg-white/5">
+            Услуги и цены
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ 2. СТАТ-БЭНД + единственный marquee ░░ -->
+    <section class="border-y border-white/10 bg-ink-900">
+      <div class="overflow-hidden border-b border-white/10 py-3">
+        <div class="marquee flex w-max gap-10 whitespace-nowrap font-display text-sm font-bold uppercase tracking-[0.18em] text-muted">
+          <!-- дублируется для бесшовности -->
+          <span class="marquee-group flex gap-10">
+            <span>Стрижка</span><span class="text-ember">◆</span><span>Борода</span><span class="text-ember">◆</span><span>Опасная бритва</span><span class="text-ember">◆</span><span>Камуфляж седины</span><span class="text-ember">◆</span><span>Детская стрижка</span><span class="text-ember">◆</span>
+          </span>
+          <span class="marquee-group flex gap-10" aria-hidden="true">
+            <span>Стрижка</span><span class="text-ember">◆</span><span>Борода</span><span class="text-ember">◆</span><span>Опасная бритва</span><span class="text-ember">◆</span><span>Камуфляж седины</span><span class="text-ember">◆</span><span>Детская стрижка</span><span class="text-ember">◆</span>
+          </span>
+        </div>
+      </div>
+      <div class="mx-auto grid max-w-shell grid-cols-2 gap-px bg-white/10 md:grid-cols-4">
+        <div class="bg-ink-900 px-6 py-10 text-center md:py-14">
+          <div class="font-display text-4xl font-extrabold text-bone md:text-5xl"><span data-count="8">0</span></div>
+          <p class="mt-2 text-sm text-muted">лет в Краснодаре</p>
+        </div>
+        <div class="bg-ink-900 px-6 py-10 text-center md:py-14">
+          <div class="font-display text-4xl font-extrabold text-bone md:text-5xl"><span data-count="12">0</span></div>
+          <p class="mt-2 text-sm text-muted">мастеров в команде</p>
+        </div>
+        <div class="bg-ink-900 px-6 py-10 text-center md:py-14">
+          <div class="font-display text-4xl font-extrabold text-bone md:text-5xl"><span data-count="30">0</span><span class="text-ember">k+</span></div>
+          <p class="mt-2 text-sm text-muted">стрижек сделано</p>
+        </div>
+        <div class="bg-ink-900 px-6 py-10 text-center md:py-14">
+          <div class="font-display text-4xl font-extrabold text-bone md:text-5xl"><span data-count="49" data-decimal="1">0</span><span class="text-ember">★</span></div>
+          <p class="mt-2 text-sm text-muted">средняя оценка</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ 3. УСЛУГИ — асимметричный bento ░░ -->
+    <section id="services" class="mx-auto max-w-shell px-4 py-24 md:px-8 md:py-32">
+      <div class="mb-12 max-w-2xl">
+        <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-ember">Прайс</p>
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Что мы делаем</h2>
+        <p class="mt-4 text-base leading-relaxed text-muted">Честные цены без звёздочек. Финальная стоимость зависит от длины и сложности, мастер скажет до начала работы.</p>
+      </div>
+
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-12 md:auto-rows-[200px]">
+        <!-- A: большой фото-тайл -->
+        <article class="reveal group relative overflow-hidden rounded-card md:col-span-7 md:row-span-2">
+          <img src="https://images.unsplash.com/photo-1559453252-1634e4c59f20?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxtYW4lMjBiZWFyZCUyMGJhcmJlcnxlbnwxfDJ8fHwxNzgyMTI4MzAyfDA&ixlib=rb-4.1.0&w=900&q=80&fm=jpg&fit=crop" alt="Стрижка и моделирование бороды" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/40 to-transparent"></div>
+          <div class="relative flex h-full min-h-[260px] flex-col justify-end p-7">
+            <h3 class="font-display text-2xl font-bold text-bone md:text-3xl">Стрижка + борода</h3>
+            <p class="mt-1 max-w-sm text-sm text-bone/70">Комплекс: чистая форма головы и аккуратный контур бороды за один визит.</p>
+            <p class="mt-4 font-display text-xl font-bold text-ember">2200 ₽</p>
+          </div>
+        </article>
+
+        <!-- B: фото-тайл -->
+        <article class="reveal group relative overflow-hidden rounded-card md:col-span-5">
+          <img src="https://images.unsplash.com/photo-1735150949646-f998a2061b82?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxtZW4lMjBoYWlyY3V0JTIwYmFyYmVyfGVufDF8Mnx8fDE3ODIxMjgzMDV8MA&ixlib=rb-4.1.0&w=900&q=80&fm=jpg&fit=crop" alt="Мужская стрижка" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/30 to-transparent"></div>
+          <div class="relative flex h-full min-h-[200px] flex-col justify-end p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Мужская стрижка</h3>
+            <p class="mt-3 font-display text-lg font-bold text-ember">1500 ₽</p>
+          </div>
+        </article>
+
+        <!-- C: фото-тайл -->
+        <article class="reveal group relative overflow-hidden rounded-card md:col-span-5">
+          <img src="https://images.unsplash.com/photo-1588331299958-aa30ab1928e0?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwzfHxiYXJiZXIlMjBzaGF2aW5nfGVufDF8Mnx8fDE3ODIxMjgzNjN8MA&ixlib=rb-4.1.0&w=900&q=80&fm=jpg&fit=crop" alt="Бритьё опасной бритвой" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/30 to-transparent"></div>
+          <div class="relative flex h-full min-h-[200px] flex-col justify-end p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Бритьё опасной бритвой</h3>
+            <p class="mt-3 font-display text-lg font-bold text-ember">1300 ₽</p>
+          </div>
+        </article>
+
+        <!-- D: ember-тайл -->
+        <article class="reveal flex flex-col justify-between rounded-card bg-ember p-6 text-ink-950 md:col-span-4">
+          <i class="ph ph-scissors text-3xl"></i>
+          <div>
+            <h3 class="font-display text-xl font-bold">Моделирование бороды</h3>
+            <p class="mt-2 font-display text-lg font-bold">1000 ₽</p>
+          </div>
+        </article>
+
+        <!-- E: контурный тайл -->
+        <article class="reveal flex flex-col justify-between rounded-card border border-white/10 bg-ink-900 p-6 md:col-span-4">
+          <i class="ph ph-drop-half text-3xl text-ember"></i>
+          <div>
+            <h3 class="font-display text-xl font-bold text-bone">Камуфляж седины</h3>
+            <p class="mt-2 font-display text-lg font-bold text-ember">900 ₽</p>
+          </div>
+        </article>
+
+        <!-- F: контурный тайл -->
+        <article class="reveal flex flex-col justify-between rounded-card border border-white/10 bg-ink-850 p-6 md:col-span-4">
+          <i class="ph ph-baby text-3xl text-ember"></i>
+          <div>
+            <h3 class="font-display text-xl font-bold text-bone">Детская стрижка</h3>
+            <p class="mt-1 text-xs text-muted">до 12 лет</p>
+            <p class="mt-2 font-display text-lg font-bold text-ember">1100 ₽</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ░░ 4. МАСТЕРА — горизонтальный scroll-snap ░░ -->
+    <section id="masters" class="border-y border-white/10 bg-ink-900 py-24 md:py-32">
+      <div class="mx-auto mb-12 flex max-w-shell flex-col gap-4 px-4 md:px-8">
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Команда цеха</h2>
+        <p class="max-w-xl text-base leading-relaxed text-muted">У каждого мастера свой почерк. Можно прийти к конкретному человеку или довериться нашему выбору.</p>
+      </div>
+
+      <div class="scroll-row flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 md:px-8">
+        <!-- карточка -->
+        <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
+          <img src="https://images.unsplash.com/photo-1647140655214-e4a2d914971f?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxiYXJiZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzgyMTI4MzA5fDA&ixlib=rb-4.1.0&w=800&q=80&fm=jpg&fit=crop" alt="Барбер Артём" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Артём</h3>
+            <p class="mt-1 text-sm text-ember">топ-барбер · фейды</p>
+          </div>
+        </article>
+        <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
+          <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwyfHxiYXJiZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzgyMTI4MzA5fDA&ixlib=rb-4.1.0&w=800&q=80&fm=jpg&fit=crop" alt="Барбер Давид" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Давид</h3>
+            <p class="mt-1 text-sm text-ember">бородист · классика</p>
+          </div>
+        </article>
+        <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
+          <img src="https://images.unsplash.com/photo-1598524374912-6b0b0bab43dd?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwzfHxiYXJiZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzgyMTI4MzA5fDA&ixlib=rb-4.1.0&w=800&q=80&fm=jpg&fit=crop" alt="Барбер Илья" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Илья</h3>
+            <p class="mt-1 text-sm text-ember">барбер · текстурные стрижки</p>
+          </div>
+        </article>
+        <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
+          <img src="https://images.unsplash.com/photo-1553521041-d168abd31de3?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHw0fHxiYXJiZXIlMjBwb3J0cmFpdHxlbnwxfDF8fHwxNzgyMTI4MzA5fDA&ixlib=rb-4.1.0&w=800&q=80&fm=jpg&fit=crop" alt="Барбер Марк" class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-transparent"></div>
+          <div class="absolute bottom-0 left-0 p-6">
+            <h3 class="font-display text-xl font-bold text-bone">Марк</h3>
+            <p class="mt-1 text-sm text-ember">колорист · седина и цвет</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ░░ 5. АТМОСФЕРА — GSAP pinned horizontal-pan (фолбэк: scroll-snap) ░░ -->
+    <section id="atmosphere" class="relative">
+      <div class="mx-auto max-w-shell px-4 pt-24 md:px-8 md:pt-32">
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Атмосфера цеха</h2>
+        <p class="mt-4 max-w-xl text-base leading-relaxed text-muted">Кирпич, тёплый свет, винил и кофе. Место, куда хочется вернуться не только за стрижкой.</p>
+      </div>
+
+      <div id="pan-wrap" class="pan-wrap relative mt-12 overflow-hidden">
+        <div id="pan-track" class="pan-track flex gap-4 px-4 pb-24 md:px-8">
+          <figure class="pan-item aspect-[16/10] w-[85vw] flex-none overflow-hidden rounded-card md:w-[640px]">
+            <img src="https://images.unsplash.com/photo-1754294437661-129b86f868ea?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwyfHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1280&q=80&fm=jpg&fit=crop" alt="Интерьер барбершопа" class="h-full w-full object-cover" />
+          </figure>
+          <figure class="pan-item aspect-[16/10] w-[85vw] flex-none overflow-hidden rounded-card md:w-[640px]">
+            <img src="https://images.unsplash.com/photo-1759142449398-89357aa1bb36?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwzfHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1280&q=80&fm=jpg&fit=crop" alt="Барберское кресло" class="h-full w-full object-cover" />
+          </figure>
+          <figure class="pan-item aspect-[16/10] w-[85vw] flex-none overflow-hidden rounded-card md:w-[640px]">
+            <img src="https://images.unsplash.com/photo-1726114601623-8c5f0c573976?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHw0fHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1280&q=80&fm=jpg&fit=crop" alt="Инструменты барбера" class="h-full w-full object-cover" />
+          </figure>
+          <figure class="pan-item aspect-[16/10] w-[85vw] flex-none overflow-hidden rounded-card md:w-[640px]">
+            <img src="https://images.unsplash.com/photo-1592647420148-bfcc177e2117?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHx2aW50YWdlJTIwYmFyYmVyJTIwY2hhaXJ8ZW58MXwwfHx8MTc4MjEyODI4MXww&ixlib=rb-4.1.0&w=1280&q=80&fm=jpg&fit=crop" alt="Деталь интерьера" class="h-full w-full object-cover" />
+          </figure>
+          <figure class="pan-item aspect-[16/10] w-[85vw] flex-none overflow-hidden rounded-card md:w-[640px]">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxiYXJiZXIlMjBzY2lzc29ycyUyMGNsaXBwZXJzfGVufDF8MHx8fDE3ODIxMjgzNjF8MA&ixlib=rb-4.1.0&w=1280&q=80&fm=jpg&fit=crop" alt="Рабочее место мастера" class="h-full w-full object-cover" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ░░ 6. КАК ПРОХОДИТ ВИЗИТ — вертикальная степ-секвенция ░░ -->
+    <section class="border-t border-white/10 bg-ink-900 py-24 md:py-32">
+      <div class="mx-auto max-w-shell px-4 md:px-8">
+        <h2 class="mb-14 font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Как проходит визит</h2>
+        <ol class="flex flex-col">
+          <li class="reveal grid grid-cols-[auto_1fr] items-start gap-6 border-t border-white/10 py-8 md:grid-cols-[120px_1fr] md:gap-10">
+            <span class="font-display text-4xl font-extrabold text-ember/30 md:text-6xl">01</span>
+            <div class="pt-1">
+              <h3 class="font-display text-xl font-bold text-bone md:text-2xl">Запись</h3>
+              <p class="mt-2 max-w-lg text-muted">Бронируешь время онлайн или по телефону. Выбираешь мастера и услугу.</p>
+            </div>
+          </li>
+          <li class="reveal grid grid-cols-[auto_1fr] items-start gap-6 border-t border-white/10 py-8 md:grid-cols-[120px_1fr] md:gap-10">
+            <span class="font-display text-4xl font-extrabold text-ember/30 md:text-6xl">02</span>
+            <div class="pt-1">
+              <h3 class="font-display text-xl font-bold text-bone md:text-2xl">Разбор</h3>
+              <p class="mt-2 max-w-lg text-muted">Обсуждаем форму и длину, подбираем образ под тип волос и стиль жизни.</p>
+            </div>
+          </li>
+          <li class="reveal grid grid-cols-[auto_1fr] items-start gap-6 border-t border-white/10 py-8 md:grid-cols-[120px_1fr] md:gap-10">
+            <span class="font-display text-4xl font-extrabold text-ember/30 md:text-6xl">03</span>
+            <div class="pt-1">
+              <h3 class="font-display text-xl font-bold text-bone md:text-2xl">Работа</h3>
+              <p class="mt-2 max-w-lg text-muted">Стрижём, бреем, укладываем. Кофе, музыка и нормальный разговор по желанию.</p>
+            </div>
+          </li>
+          <li class="reveal grid grid-cols-[auto_1fr] items-start gap-6 border-y border-white/10 py-8 md:grid-cols-[120px_1fr] md:gap-10">
+            <span class="font-display text-4xl font-extrabold text-ember/30 md:text-6xl">04</span>
+            <div class="pt-1">
+              <h3 class="font-display text-xl font-bold text-bone md:text-2xl">Результат</h3>
+              <p class="mt-2 max-w-lg text-muted">Показываем, как уложить дома, и записываем на следующий раз со скидкой.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ░░ 7. ОТЗЫВЫ ░░ -->
+    <section id="reviews" class="mx-auto max-w-shell px-4 py-24 md:px-8 md:py-32">
+      <h2 class="mb-12 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Что говорят гости</h2>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <figure class="reveal flex flex-col gap-6 rounded-card border border-white/10 bg-ink-900 p-7">
+          <div class="text-ember"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <blockquote class="text-lg leading-relaxed text-bone">«Хожу сюда год. Ни разу не вышел недовольным, мастера слушают и предлагают своё.»</blockquote>
+          <figcaption class="mt-auto text-sm text-muted">Сергей, 28, маркетолог</figcaption>
+        </figure>
+        <figure class="reveal flex flex-col gap-6 rounded-card border border-white/10 bg-ink-900 p-7">
+          <div class="text-ember"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <blockquote class="text-lg leading-relaxed text-bone">«Лучшая борода в городе. Записаться легко, кофе наливают, музыка точно по настроению.»</blockquote>
+          <figcaption class="mt-auto text-sm text-muted">Артур, 34, предприниматель</figcaption>
+        </figure>
+        <figure class="reveal flex flex-col gap-6 rounded-card border border-white/10 bg-ink-900 p-7">
+          <div class="text-ember"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+          <blockquote class="text-lg leading-relaxed text-bone">«Привёл сына на первую стрижку, он не испугался. Теперь ходим вдвоём, как ритуал.»</blockquote>
+          <figcaption class="mt-auto text-sm text-muted">Дмитрий, 41, инженер</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ░░ 8. ЗАПИСЬ — форма + контакты + карта ░░ -->
+    <section id="booking" class="border-t border-white/10 bg-ink-900 py-24 md:py-32">
+      <div class="mx-auto grid max-w-shell grid-cols-1 gap-12 px-4 md:px-8 lg:grid-cols-2 lg:gap-16">
+        <!-- Форма -->
+        <div>
+          <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-ember">Запись онлайн</p>
+          <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Займи своё кресло</h2>
+          <p class="mt-4 max-w-md text-base leading-relaxed text-muted">Оставь контакты, перезвоним в течение 15 минут и подтвердим время.</p>
+
+          <form id="booking-form" class="mt-9 flex flex-col gap-5" novalidate>
+            <div class="flex flex-col gap-2">
+              <label for="name" class="text-sm font-medium text-bone">Имя</label>
+              <input id="name" name="name" type="text" required autocomplete="name" placeholder="Как к тебе обращаться"
+                class="rounded-input border border-white/15 bg-ink-850 px-4 py-3 text-bone placeholder:text-muted/60 outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/40" />
+              <p class="error hidden text-sm text-ember" data-error-for="name">Введи имя</p>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <label for="phone" class="text-sm font-medium text-bone">Телефон</label>
+              <input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="+7 (___) ___-__-__"
+                class="rounded-input border border-white/15 bg-ink-850 px-4 py-3 text-bone placeholder:text-muted/60 outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/40" />
+              <p class="error hidden text-sm text-ember" data-error-for="phone">Введи корректный номер</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+              <div class="flex flex-col gap-2">
+                <label for="service" class="text-sm font-medium text-bone">Услуга</label>
+                <select id="service" name="service" class="rounded-input border border-white/15 bg-ink-850 px-4 py-3 text-bone outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/40">
+                  <option>Мужская стрижка</option>
+                  <option>Стрижка + борода</option>
+                  <option>Моделирование бороды</option>
+                  <option>Бритьё опасной бритвой</option>
+                  <option>Камуфляж седины</option>
+                  <option>Детская стрижка</option>
+                </select>
+              </div>
+              <div class="flex flex-col gap-2">
+                <label for="master" class="text-sm font-medium text-bone">Мастер</label>
+                <select id="master" name="master" class="rounded-input border border-white/15 bg-ink-850 px-4 py-3 text-bone outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/40">
+                  <option>Любой свободный</option>
+                  <option>Артём</option>
+                  <option>Давид</option>
+                  <option>Илья</option>
+                  <option>Марк</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- TODO: подключить виджет онлайн-записи YClients вместо локальной отправки -->
+            <button type="submit" data-magnetic class="group mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full bg-ember py-4 text-base font-semibold text-ink-950 transition-transform duration-300 active:scale-[0.98] sm:w-auto sm:px-8">
+              <span data-submit-label>Записаться</span>
+              <span class="flex h-7 w-7 items-center justify-center rounded-full bg-ink-950/15 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" data-magnet-inner>
+                <i class="ph ph-arrow-up-right"></i>
+              </span>
+            </button>
+
+            <p id="form-success" class="hidden items-center gap-2 rounded-input border border-ember/40 bg-ember/10 px-4 py-3 text-sm text-bone">
+              <i class="ph ph-check-circle text-ember"></i> Заявка принята. Перезвоним в течение 15 минут.
+            </p>
+          </form>
+        </div>
+
+        <!-- Контакты + карта -->
+        <div class="flex flex-col gap-6">
+          <div class="grid grid-cols-1 gap-px overflow-hidden rounded-card border border-white/10 bg-white/10 sm:grid-cols-2">
+            <div class="bg-ink-850 p-6">
+              <i class="ph ph-map-pin mb-3 block text-2xl text-ember"></i>
+              <h3 class="font-display text-base font-bold text-bone">Адрес</h3>
+              <p class="mt-1 text-sm text-muted">Краснодар, ул. Красная, 100</p>
+            </div>
+            <div class="bg-ink-850 p-6">
+              <i class="ph ph-clock mb-3 block text-2xl text-ember"></i>
+              <h3 class="font-display text-base font-bold text-bone">Часы</h3>
+              <p class="mt-1 text-sm text-muted">Каждый день, с 10:00 до 22:00</p>
+            </div>
+            <div class="bg-ink-850 p-6">
+              <i class="ph ph-phone mb-3 block text-2xl text-ember"></i>
+              <h3 class="font-display text-base font-bold text-bone">Телефон</h3>
+              <a href="tel:+78610000000" class="mt-1 block text-sm text-muted transition-colors hover:text-bone">+7 (861) 000-00-00</a>
+            </div>
+            <div class="bg-ink-850 p-6">
+              <i class="ph ph-telegram-logo mb-3 block text-2xl text-ember"></i>
+              <h3 class="font-display text-base font-bold text-bone">Telegram</h3>
+              <a href="https://t.me/" class="mt-1 block text-sm text-muted transition-colors hover:text-bone">@cex23bar</a>
+            </div>
+          </div>
+
+          <a href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D0%B4%D0%B0%D1%80%2C%20%D1%83%D0%BB.%20%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%B0%D1%8F%2C%20100" target="_blank" rel="noopener"
+            class="group relative block aspect-[4/3] overflow-hidden rounded-card border border-white/10 bg-ink-850">
+            <div class="absolute inset-0 opacity-[0.12]" style="background-image:linear-gradient(#EDE7DD 1px,transparent 1px),linear-gradient(90deg,#EDE7DD 1px,transparent 1px);background-size:44px 44px;"></div>
+            <div class="absolute left-1/2 top-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ember/10 blur-3xl"></div>
+            <div class="relative flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
+              <span class="flex h-14 w-14 items-center justify-center rounded-full bg-ember text-ink-950"><i class="ph-fill ph-map-pin text-3xl"></i></span>
+              <p class="font-display text-lg font-bold text-bone">Краснодар, ул. Красная, 100</p>
+              <span class="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-sm text-bone transition-colors group-hover:border-ember group-hover:text-ember">
+                <i class="ph ph-navigation-arrow"></i> Открыть в Яндекс.Картах
+              </span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ░░ 9. FOOTER ░░ -->
+  <footer class="border-t border-white/10 bg-ink-950 py-16">
+    <div class="mx-auto max-w-shell px-4 md:px-8">
+      <div class="flex flex-col justify-between gap-10 md:flex-row">
+        <div class="max-w-sm">
+          <a href="#hero" class="font-display text-2xl font-extrabold tracking-tight text-bone">ЦЕХ<span class="text-ember">23</span></a>
+          <p class="mt-4 text-sm leading-relaxed text-muted">Мужская мастерская стрижки и бороды в центре Краснодара. Точность, характер, без лишнего пафоса.</p>
+          <div class="mt-6 flex gap-3">
+            <a href="https://t.me/" aria-label="Telegram" class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-bone transition-colors hover:border-ember hover:text-ember"><i class="ph ph-telegram-logo text-lg"></i></a>
+            <a href="https://vk.com/" aria-label="ВКонтакте" class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-bone transition-colors hover:border-ember hover:text-ember"><i class="ph ph-chat-circle-text text-lg"></i></a>
+            <a href="https://instagram.com/" aria-label="Instagram" class="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-bone transition-colors hover:border-ember hover:text-ember"><i class="ph ph-instagram-logo text-lg"></i></a>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-10 sm:grid-cols-3">
+          <div>
+            <h4 class="mb-4 text-sm font-semibold text-bone">Навигация</h4>
+            <ul class="flex flex-col gap-2 text-sm text-muted">
+              <li><a href="#services" class="transition-colors hover:text-bone">Услуги</a></li>
+              <li><a href="#masters" class="transition-colors hover:text-bone">Мастера</a></li>
+              <li><a href="#atmosphere" class="transition-colors hover:text-bone">Атмосфера</a></li>
+              <li><a href="#reviews" class="transition-colors hover:text-bone">Отзывы</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="mb-4 text-sm font-semibold text-bone">Контакты</h4>
+            <ul class="flex flex-col gap-2 text-sm text-muted">
+              <li>Краснодар, ул. Красная, 100</li>
+              <li><a href="tel:+78610000000" class="transition-colors hover:text-bone">+7 (861) 000-00-00</a></li>
+              <li>с 10:00 до 22:00</li>
+            </ul>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <h4 class="mb-4 text-sm font-semibold text-bone">Запись</h4>
+            <a href="#booking" class="inline-flex items-center gap-2 rounded-full bg-ember px-5 py-2.5 text-sm font-semibold text-ink-950 transition-transform duration-300 active:scale-[0.97]">Записаться</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-muted/70 md:flex-row md:items-center md:justify-between">
+        <p>© 2026 ЦЕХ 23. Барбершоп в Краснодаре.</p>
+        <p id="photo-credits">Фото на Unsplash: Barney Goodman, Babak Eshaghian, Chaps and Co, inni w, André Reis, Andrea Donato, Alexandre Lecocq, Victor Sirbu, Apothecary 87, Nate Johnston, Nathon Oski, Jeppe Mønster, Eugene Chystiakov</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- GSAP (демо-CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

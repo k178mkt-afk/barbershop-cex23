@@ -1,0 +1,7 @@
+# Секреты — НЕ публиковать
+unsplash.txt
+
+# Служебные папки инструментов
+.claude/
+.agents/
+skills-lock.json

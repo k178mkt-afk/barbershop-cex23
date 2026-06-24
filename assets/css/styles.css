@@ -32,11 +32,143 @@ html { -webkit-tap-highlight-color: transparent; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 .marquee { animation: marquee 26s linear infinite; }
 
+/* ── Брендовый прелоадер ──
+   По умолчанию скрыт: при отключённом/упавшем JS страница сразу видима.
+   Показываем только при живом JS (html.js); JS-таймлайн гарантированно его снимает. */
+#preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #0A0A0B;
+  will-change: transform;
+}
+html.js #preloader { display: flex; }
+
+/* ── Кастомный курсор (точка + следящее кольцо) ──
+   Включается только из JS при desktop/pointer:fine (html.cursor-active);
+   на touch/RM/без JS — обычный системный курсор, элементы скрыты. */
+.cursor-el {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 90;
+  display: none;
+  pointer-events: none;
+  will-change: transform;
+}
+html.cursor-active .cursor-el { display: block; }
+#cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: #FF5A1F;
+}
+#cursor-ring {
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1.5px solid rgba(245, 243, 239, 0.5);
+  border-radius: 50%;
+  transition: width .25s ease, height .25s ease, margin .25s ease, border-color .25s ease, background-color .25s ease;
+}
+#cursor-ring.is-hover {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  border-color: #FF5A1F;
+  background: rgba(255, 90, 31, 0.08);
+}
+/* Системный курсор прячем только при активном кастомном; в полях ввода — оставляем карет. */
+html.cursor-active, html.cursor-active * { cursor: none !important; }
+html.cursor-active input,
+html.cursor-active textarea,
+html.cursor-active select { cursor: auto !important; }
+
+/* ── Индикатор прогресса чтения (scaleX через JS; по умолчанию пуст) ── */
+#scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 60;
+  background: #FF5A1F;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ── Амбиентные контролы: «наверх» и мобильный sticky-CTA ──
+   По умолчанию скрыты (opacity/transform); JS добавляет класс видимости по скроллу.
+   Без JS не мешают: кнопка «наверх» скрыта, CTA уведён за край. */
+#back-to-top {
+  opacity: 0;
+  transform: translateY(12px) scale(0.9);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .3s ease, color .2s ease, border-color .2s ease;
+}
+#back-to-top.is-visible {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+#sticky-cta {
+  opacity: 0;
+  transform: translateY(140%);
+  pointer-events: none;
+  transition: opacity .3s ease, transform .35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+#sticky-cta.is-shown {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* ── Активный пункт меню (scroll-spy) ── */
+#nav ul a { position: relative; }
+#nav ul a.is-active { color: #F5F3EF; }
+#nav ul a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 2px;
+  background: #FF5A1F;
+}
+
 /* ── Анимации появления ──
    По умолчанию всё ВИДИМО. Скрываем только когда активен JS (html.js),
    чтобы при отключённом/упавшем JS страница оставалась читаемой. */
 html.js .reveal { opacity: 0; transform: translateY(28px); filter: blur(6px); }
 html.js .hero-word { display: inline-block; opacity: 0; transform: translateY(0.4em); }
+
+/* SplitText-цели прячем до анимации только при живом JS+motion (JS вернёт видимость). */
+html.js .hero-title { opacity: 0; }
+html.js [data-split] { opacity: 0; }
+/* Обёртка строки SplitText — клип для эффекта «выезда снизу» */
+.split-line { overflow: hidden; }
+
+/* ── Деталь карточки мастера ──
+   По умолчанию видна (no-JS — инфо не теряется). При живом JS и только на
+   hover-устройствах деталь свёрнута и раскрывается по hover/focus (transform/opacity). */
+@media (hover: hover) and (pointer: fine) {
+  /* Покой — мгновенно (без transition), чтобы навешивание html.js не давало фейда на загрузке. */
+  html.js .master-detail { opacity: 0; transform: translateY(8px); }
+  /* Плавность вешаем только на раскрытое состояние: раскрытие — мягкое, сворачивание — без задержки. */
+  html.js .group:hover .master-detail,
+  html.js .group:focus-within .master-detail {
+    opacity: 1;
+    transform: none;
+    transition: opacity .4s ease, transform .4s ease;
+  }
+}
 
 /* Заметная focus-обводка для доступности */
 :focus-visible { outline: 2px solid #FF5A1F; outline-offset: 2px; border-radius: 4px; }
@@ -45,7 +177,11 @@ html.js .hero-word { display: inline-block; opacity: 0; transform: translateY(0.
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .marquee { animation: none; }
+  html.js #preloader { display: none; }
   html.js .reveal,
-  html.js .hero-word { opacity: 1; transform: none; filter: none; }
+  html.js .hero-word,
+  html.js .hero-title,
+  html.js [data-split],
+  html.js .master-detail { opacity: 1; transform: none; filter: none; transition: none; }
   * { scroll-snap-type: none !important; }
 }

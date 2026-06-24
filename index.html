@@ -15,6 +15,9 @@
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css" />
 
+  <!-- Lenis (плавный скролл) — базовые стили; включается только при живом JS + pointer:fine -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.css" />
+
   <!-- Tailwind play-CDN (демо). В проде — компиляция Tailwind. -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -46,6 +49,28 @@
   <!-- Плёночное зерно: фиксированный слой, не на скролл-контейнере -->
   <div class="grain" aria-hidden="true"></div>
 
+  <!-- Брендовый прелоадер: виден только при живом JS (html.js), JS гарантированно его снимает -->
+  <div id="preloader" aria-hidden="true">
+    <span data-preloader-word class="font-display text-4xl font-extrabold tracking-tight text-bone md:text-6xl">ЦЕХ<span class="text-ember">23</span></span>
+  </div>
+
+  <!-- Кастомный курсор: точка + кольцо. Видны только при активном JS-курсоре (html.cursor-active) -->
+  <div id="cursor-dot" class="cursor-el" aria-hidden="true"></div>
+  <div id="cursor-ring" class="cursor-el" aria-hidden="true"></div>
+
+  <!-- Индикатор прогресса чтения: scaleX 0→1 через JS. Без JS остаётся пустым (scaleX 0). -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- Амбиентные контролы: появляются по скроллу через JS (по умолчанию скрыты) -->
+  <button id="back-to-top" type="button" aria-label="Наверх"
+    class="fixed bottom-6 right-6 z-40 hidden h-12 w-12 items-center justify-center rounded-full border border-white/15 bg-ink-900/80 text-bone backdrop-blur-md transition-colors hover:border-ember hover:text-ember md:flex">
+    <i class="ph ph-arrow-up text-lg"></i>
+  </button>
+  <a id="sticky-cta" href="#booking"
+    class="fixed inset-x-4 bottom-4 z-40 flex items-center justify-center gap-2 rounded-full bg-ember py-3.5 text-base font-semibold text-ink-950 shadow-lg shadow-ink-950/40 md:hidden">
+    Записаться <i class="ph ph-arrow-up-right"></i>
+  </a>
+
   <!-- ░░ НАВИГАЦИЯ — плавающий glass-pill, в одну строку ░░ -->
   <header class="fixed inset-x-0 top-0 z-50 flex justify-center px-4">
     <nav id="nav" class="mt-4 flex w-full max-w-shell items-center justify-between gap-4 rounded-full border border-white/10 bg-ink-900/60 px-5 py-3 backdrop-blur-xl transition-[background-color,padding,margin] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]">
@@ -71,7 +96,7 @@
     <!-- ░░ 1. HERO — full-bleed, контент слева, фото на фоне со скримом ░░ -->
     <section id="hero" class="relative flex min-h-[100dvh] items-end overflow-hidden">
       <div class="absolute inset-0">
-        <img src="https://images.unsplash.com/photo-1781455793310-8427c96454c7?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1920&q=80&fm=jpg&fit=crop" alt="Барбер за работой в барбершопе ЦЕХ 23" class="h-full w-full object-cover" />
+        <img src="https://images.unsplash.com/photo-1781455793310-8427c96454c7?ixid=M3w5ODEwNjl8MHwxfHNlYXJjaHwxfHxiYXJiZXJzaG9wJTIwaW50ZXJpb3J8ZW58MXwwfHx8MTc4MjEyODM2MHww&ixlib=rb-4.1.0&w=1920&q=80&fm=jpg&fit=crop" alt="Барбер за работой в барбершопе ЦЕХ 23" data-parallax data-parallax-speed="0.6" class="absolute inset-x-0 -inset-y-[10%] w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/70 to-ink-950/30"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-ink-950/80 to-transparent"></div>
       </div>
@@ -82,8 +107,8 @@
         </p>
 
         <h1 class="hero-title max-w-4xl font-display text-5xl font-extrabold leading-[1.02] tracking-tight text-bone md:text-7xl">
-          <span class="hero-word">Чёткая</span> <span class="hero-word">линия,</span><br />
-          <span class="hero-word">твой</span> <span class="hero-word text-ember">характер</span>
+          Чёткая линия,<br />
+          твой <span class="text-ember">характер</span>
         </h1>
 
         <p class="reveal mt-6 max-w-xl text-base leading-relaxed text-muted md:text-lg">
@@ -141,7 +166,7 @@
     <section id="services" class="mx-auto max-w-shell px-4 py-24 md:px-8 md:py-32">
       <div class="mb-12 max-w-2xl">
         <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-ember">Прайс</p>
-        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Что мы делаем</h2>
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Что мы делаем</h2>
         <p class="mt-4 text-base leading-relaxed text-muted">Честные цены без звёздочек. Финальная стоимость зависит от длины и сложности, мастер скажет до начала работы.</p>
       </div>
 
@@ -210,7 +235,7 @@
     <!-- ░░ 4. МАСТЕРА — горизонтальный scroll-snap ░░ -->
     <section id="masters" class="border-y border-white/10 bg-ink-900 py-24 md:py-32">
       <div class="mx-auto mb-12 flex max-w-shell flex-col gap-4 px-4 md:px-8">
-        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Команда цеха</h2>
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Команда цеха</h2>
         <p class="max-w-xl text-base leading-relaxed text-muted">У каждого мастера свой почерк. Можно прийти к конкретному человеку или довериться нашему выбору.</p>
       </div>
 
@@ -222,6 +247,10 @@
           <div class="absolute bottom-0 left-0 p-6">
             <h3 class="font-display text-xl font-bold text-bone">Артём</h3>
             <p class="mt-1 text-sm text-ember">топ-барбер · фейды</p>
+            <div class="master-detail mt-3">
+              <p class="text-sm text-bone/75">Точные фейды и тон-в-тон, 8 лет за креслом.</p>
+              <a href="#booking" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-ember">Записаться <i class="ph ph-arrow-right"></i></a>
+            </div>
           </div>
         </article>
         <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
@@ -230,6 +259,10 @@
           <div class="absolute bottom-0 left-0 p-6">
             <h3 class="font-display text-xl font-bold text-bone">Давид</h3>
             <p class="mt-1 text-sm text-ember">бородист · классика</p>
+            <div class="master-detail mt-3">
+              <p class="text-sm text-bone/75">Классические стрижки и скульптурный контур бороды.</p>
+              <a href="#booking" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-ember">Записаться <i class="ph ph-arrow-right"></i></a>
+            </div>
           </div>
         </article>
         <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
@@ -238,6 +271,10 @@
           <div class="absolute bottom-0 left-0 p-6">
             <h3 class="font-display text-xl font-bold text-bone">Илья</h3>
             <p class="mt-1 text-sm text-ember">барбер · текстурные стрижки</p>
+            <div class="master-detail mt-3">
+              <p class="text-sm text-bone/75">Текстура, объём и естественная укладка под образ.</p>
+              <a href="#booking" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-ember">Записаться <i class="ph ph-arrow-right"></i></a>
+            </div>
           </div>
         </article>
         <article class="reveal group relative aspect-[3/4] w-[78vw] flex-none snap-start overflow-hidden rounded-card sm:w-[340px]">
@@ -246,6 +283,10 @@
           <div class="absolute bottom-0 left-0 p-6">
             <h3 class="font-display text-xl font-bold text-bone">Марк</h3>
             <p class="mt-1 text-sm text-ember">колорист · седина и цвет</p>
+            <div class="master-detail mt-3">
+              <p class="text-sm text-bone/75">Камуфляж седины и аккуратная работа с цветом.</p>
+              <a href="#booking" class="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-ember">Записаться <i class="ph ph-arrow-right"></i></a>
+            </div>
           </div>
         </article>
       </div>
@@ -254,7 +295,7 @@
     <!-- ░░ 5. АТМОСФЕРА — GSAP pinned horizontal-pan (фолбэк: scroll-snap) ░░ -->
     <section id="atmosphere" class="relative">
       <div class="mx-auto max-w-shell px-4 pt-24 md:px-8 md:pt-32">
-        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Атмосфера цеха</h2>
+        <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Атмосфера цеха</h2>
         <p class="mt-4 max-w-xl text-base leading-relaxed text-muted">Кирпич, тёплый свет, винил и кофе. Место, куда хочется вернуться не только за стрижкой.</p>
       </div>
 
@@ -282,7 +323,7 @@
     <!-- ░░ 6. КАК ПРОХОДИТ ВИЗИТ — вертикальная степ-секвенция ░░ -->
     <section class="border-t border-white/10 bg-ink-900 py-24 md:py-32">
       <div class="mx-auto max-w-shell px-4 md:px-8">
-        <h2 class="mb-14 font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Как проходит визит</h2>
+        <h2 class="mb-14 font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Как проходит визит</h2>
         <ol class="flex flex-col">
           <li class="reveal grid grid-cols-[auto_1fr] items-start gap-6 border-t border-white/10 py-8 md:grid-cols-[120px_1fr] md:gap-10">
             <span class="font-display text-4xl font-extrabold text-ember/30 md:text-6xl">01</span>
@@ -318,7 +359,7 @@
 
     <!-- ░░ 7. ОТЗЫВЫ ░░ -->
     <section id="reviews" class="mx-auto max-w-shell px-4 py-24 md:px-8 md:py-32">
-      <h2 class="mb-12 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Что говорят гости</h2>
+      <h2 class="mb-12 max-w-2xl font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Что говорят гости</h2>
       <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
         <figure class="reveal flex flex-col gap-6 rounded-card border border-white/10 bg-ink-900 p-7">
           <div class="text-ember"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
@@ -344,7 +385,7 @@
         <!-- Форма -->
         <div>
           <p class="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-ember">Запись онлайн</p>
-          <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl">Займи своё кресло</h2>
+          <h2 class="font-display text-4xl font-bold leading-tight tracking-tight text-bone md:text-5xl" data-split>Займи своё кресло</h2>
           <p class="mt-4 max-w-md text-base leading-relaxed text-muted">Оставь контакты, перезвоним в течение 15 минут и подтвердим время.</p>
 
           <form id="booking-form" class="mt-9 flex flex-col gap-5" novalidate>
@@ -366,12 +407,12 @@
               <div class="flex flex-col gap-2">
                 <label for="service" class="text-sm font-medium text-bone">Услуга</label>
                 <select id="service" name="service" class="rounded-input border border-white/15 bg-ink-850 px-4 py-3 text-bone outline-none transition focus:border-ember focus:ring-2 focus:ring-ember/40">
-                  <option>Мужская стрижка</option>
-                  <option>Стрижка + борода</option>
-                  <option>Моделирование бороды</option>
-                  <option>Бритьё опасной бритвой</option>
-                  <option>Камуфляж седины</option>
-                  <option>Детская стрижка</option>
+                  <option data-price="1500">Мужская стрижка</option>
+                  <option data-price="2200">Стрижка + борода</option>
+                  <option data-price="1000">Моделирование бороды</option>
+                  <option data-price="1300">Бритьё опасной бритвой</option>
+                  <option data-price="900">Камуфляж седины</option>
+                  <option data-price="1100">Детская стрижка</option>
                 </select>
               </div>
               <div class="flex flex-col gap-2">
@@ -383,6 +424,22 @@
                   <option>Илья</option>
                   <option>Марк</option>
                 </select>
+              </div>
+            </div>
+
+            <!-- Живая сводка заявки: обновляется JS при смене услуги/мастера; без JS — статичные дефолты -->
+            <div class="rounded-input border border-white/10 bg-ink-850/60 px-4 py-3 text-sm" data-summary>
+              <div class="flex items-center justify-between gap-4">
+                <span class="text-muted">Услуга</span>
+                <span class="font-medium text-bone" data-summary-service>Мужская стрижка</span>
+              </div>
+              <div class="mt-2 flex items-center justify-between gap-4">
+                <span class="text-muted">Мастер</span>
+                <span class="font-medium text-bone" data-summary-master>Любой свободный</span>
+              </div>
+              <div class="mt-3 flex items-center justify-between gap-4 border-t border-white/10 pt-3">
+                <span class="text-muted">Стоимость</span>
+                <span class="font-display text-lg font-bold text-ember" data-summary-price>1500 ₽</span>
               </div>
             </div>
 
@@ -488,9 +545,12 @@
     </div>
   </footer>
 
-  <!-- GSAP (демо-CDN) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- GSAP 3.13 (демо-CDN). SplitText теперь бесплатный — отсюда же. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/SplitText.min.js"></script>
+  <!-- Lenis (плавный скролл) — UMD-сборка, глобал window.Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>
